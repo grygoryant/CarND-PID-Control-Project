@@ -1,46 +1,58 @@
 #ifndef PID_H
 #define PID_H
 
-class PID {
+#include <chrono>
+#include <vector>
+
+class PID
+{
 public:
-  /*
+	/*
   * Errors
   */
-  double p_error;
-  double i_error;
-  double d_error;
+	double m_p_error;
+	double m_i_error;
+	double m_d_error;
 
-  /*
+	/*
   * Coefficients
-  */ 
-  double Kp;
-  double Ki;
-  double Kd;
+  */
+	std::vector<double> m_coeffs;
 
-  /*
+	bool m_enable_twiddle{ false };
+	std::vector<double> m_dp;
+	double m_best_err{ std::numeric_limits<double>::max() };
+	size_t m_last_param_index{ 0 };
+	size_t m_iteration{ 0 };
+	double m_total_err{ 0 };
+	bool m_increased{ false };
+	bool m_decreased{ false };
+	size_t m_tweedle_steps{ 50 };
+
+	/*
   * Constructor
   */
-  PID();
+	PID();
 
-  /*
+	/*
   * Destructor.
   */
-  virtual ~PID();
+	virtual ~PID();
 
-  /*
+	/*
   * Initialize PID.
   */
-  void Init(double Kp, double Ki, double Kd);
+	void Init(double Kp, double Ki, double Kd);
 
-  /*
+	/*
   * Update the PID error variables given cross track error.
   */
-  void UpdateError(double cte);
+	void UpdateError(double cte);
 
-  /*
+	/*
   * Calculate the total PID error.
   */
-  double TotalError();
+	double TotalError();
 };
 
 #endif /* PID_H */

@@ -3,6 +3,19 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## PID coefficients
+
+* P - Proportional
+	Proportional component influences on how hard the car will steer towards the trajectory. The larger is this component, the harder the car will steer (proportional to the CTE).
+
+* I - Integral
+	This component helps to avoid bias in the CTE, which doesn't allow us to reach trajectory. One of the forms of the bias is steering drift.
+
+* D - Differential
+	Differential component helps us to reach trajectroy smoothly without oscilations.
+
+In my implementation I used both twiddle and manual tuning to find proper parameters. 
+
 ## Dependencies
 
 * cmake >= 3.5
